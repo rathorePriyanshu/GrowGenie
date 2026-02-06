@@ -35,14 +35,14 @@ const NavBar = () => {
           </span>
         </h1>
       </div>
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-1 items-center">
+      <div className="flex gap-4 items-center divide-x divide-[#444c48]">
+        <div className="flex gap-1 items-center ">
           {[
             { name: "Home", path: "/" },
             { name: "10th Class", path: "/stream" },
             { name: "12th Class", path: "/seniorstream" },
             { name: "Career", path: "/career" },
-            { name: "RoadMap", path: "/" },
+            { name: "RoadMap", path: "/roadmap" },
           ].map((link, index) => (
             <div key={link.name} className="relative flex items-center">
               <Link
@@ -64,7 +64,7 @@ const NavBar = () => {
             </div>
           ))}
         </div>
-        <div>
+        <div className="pl-4">
           <Login />
         </div>
       </div>
