@@ -43,3 +43,34 @@ export interface CareerData {
   roadmap: CareerRoadmap[];
   img: string;
 }
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+export interface CheckAuthData {
+  email: string;
+}
+
+export interface OTPData {
+  otp: string[];
+}
+
+export interface SignupData {
+  email: string;
+  name: string;
+  password: string;
+  confirmpassword: string;
+}
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export interface ResetPasswordData {
+  password: string;
+  confirmPassword: string;
+}
