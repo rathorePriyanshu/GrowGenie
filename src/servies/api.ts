@@ -6,6 +6,11 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
 });
 
+const refreshApi = axios.create({
+  baseURL: api.defaults.baseURL,
+  withCredentials: true,
+});
+
 let isRefreshing = false;
 let failedQueue: {
   resolve: (token: string) => void;
@@ -42,7 +47,11 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      originalRequest.url !== "/auth/refresh"
+    ) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -59,7 +68,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const res = await api.post("/auth/refresh");
+        const res = await refreshApi.post("/auth/refresh");
         const newToken = res.data.accessToken;
 
         localStorage.setItem("accessToken", newToken);
@@ -84,6 +93,25 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+export const bootstrapAuth = async () => {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    useAuthStore.getState().setInitialized();
+    return;
+  }
+
+  try {
+    const res = await api.get("/auth/me");
+    useAuthStore.getState().setAuth(res.data.user);
+  } catch {
+    localStorage.removeItem("accessToken");
+    useAuthStore.getState().clearAuth();
+  } finally {
+    useAuthStore.getState().setInitialized();
+  }
+};
+
 //fetch quizes
 export const fetchQuizes = async (
   classLevel: "10" | "12",
@@ -172,20 +200,40 @@ export const ResetPassword = async (token: string, password: string) => {
   return res.data;
 };
 
-export const bootstrapAuth = async () => {
-  const token = localStorage.getItem("accessToken");
-  if (!token) {
-    useAuthStore.getState().setInitialized();
-    return;
-  }
+export const getRoadmap = async (
+  career_id: string,
+  career_name: string,
+  career_source: string,
+) => {
+  const res = await api.post("/roadmap", {
+    career_id,
+    career_name,
+    career_source,
+  });
 
-  try {
-    const res = await api.get("/auth/me");
-    useAuthStore.getState().setAuth(res.data.user);
-  } catch {
-    localStorage.removeItem("accessToken");
-    useAuthStore.getState().clearAuth();
-  } finally {
-    useAuthStore.getState().setInitialized();
-  }
+  return res.data;
+};
+
+export const saveRoadmap = async (roadmap_id: string) => {
+  const res = await api.post("/roadmaps/save", { roadmap_id });
+
+  return res.data;
+};
+
+export const getSavedRoadmaps = async () => {
+  const res = await api.get("/roadmaps");
+
+  return res.data;
+};
+
+export const getProfileRoadmap = async (roadmap_id: string) => {
+  const res = await api.get(`/roadmap/${roadmap_id}`);
+
+  return res.data;
+};
+
+export const deleteRoadmap = async (roadmap_id: string) => {
+  const res = await api.delete(`/roadmap/save/${roadmap_id}`);
+
+  return res.data;
 };

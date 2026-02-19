@@ -17,30 +17,26 @@ export interface QuizAnswer {
   selectedOptionId: string;
 }
 
+export interface CareerInfo {
+  career_id: string;
+  career_name: string;
+  career_source: string;
+}
+
 export interface QuizResult {
   recommendedStream: "Science" | "Commerce" | "Arts";
   topskills: string[];
-  careers: { title: string; description?: string }[];
   aiFeedback: string;
-}
-
-export interface CareerRoadmap {
-  title: string;
-  steps: string[];
-}
-
-export interface CareerColleges {
-  name: string;
-  description: string;
+  careerInfo: CareerInfo[];
 }
 
 export interface CareerData {
+  career_id: string;
   title: string;
   description: string;
   stream: "Science" | "Commerce" | "Arts";
   avgSalary: string;
-  topColleges: CareerColleges[];
-  roadmap: CareerRoadmap[];
+  source: string;
   img: string;
 }
 
@@ -73,4 +69,64 @@ export interface LoginData {
 export interface ResetPasswordData {
   password: string;
   confirmPassword: string;
+}
+
+interface RoadmapContent {
+  career_name: string;
+
+  overview: {
+    description: string;
+    difficulty: string;
+    time_required: string;
+    salary_range: string;
+  };
+
+  steps: {
+    step_number: number;
+    title: string;
+    description: string;
+  }[];
+
+  skills: {
+    category: string;
+    items: string[];
+  }[];
+
+  projects: {
+    level: "Beginner" | "Intermediate" | "Advanced";
+    title: string;
+    description: string;
+  }[];
+
+  exams: string[];
+
+  colleges: string[];
+
+  salary_growth: {
+    role: string;
+    experience: string;
+    salary_range: string;
+  }[];
+
+  future_scope: string;
+}
+
+export interface Roadmap {
+  _id: string;
+  career_id: string;
+  career_name: string;
+  career_source: string;
+  country: string;
+  version: number;
+  roadmap_json: RoadmapContent;
+  generatedBy: string;
+}
+
+export interface savedRoadmaps {
+  roadmap_id: string;
+  career_id: string;
+  career_name: string;
+  country: string;
+  version: number;
+  savedAt: string;
 }
