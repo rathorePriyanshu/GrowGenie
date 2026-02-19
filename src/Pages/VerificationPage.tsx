@@ -4,11 +4,29 @@ import { useLocation, useNavigate } from "react-router-dom";
 import type { OTPData } from "../servies/types";
 import { OTPVerify } from "../servies/api";
 import { getErrorMessage } from "../servies/methods";
+import { useAuthStore } from "../store/auth";
+import Loading from "../Components/Loading";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const VerificationPage = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const verificationId = state?.verificationId;
+  const location = useLocation();
+  const { loading, setLoading } = useAuthStore();
+  const verificationId = location.state?.verificationId;
+
+  useEffect(() => {
+    if (location.state.otpSent) {
+      toast.success("OTP sent to your email", {
+        toastId: "otp-sent",
+      });
+
+      navigate(location.pathname, {
+        replace: true,
+        state: { verificationId: location.state.verificationId },
+      });
+    }
+  }, [location, navigate]);
 
   const {
     register,
@@ -73,6 +91,7 @@ const VerificationPage = () => {
         return null;
       }
 
+      setLoading(true);
       const res = await OTPVerify(verificationId, otpCode);
       sessionStorage.setItem("signupToken", res.signupToken);
       reset();
@@ -85,8 +104,12 @@ const VerificationPage = () => {
         type: "server",
         message: message,
       });
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className=" relative z-10 w-full flex flex-col items-center gap-5 max-w-xl justify-center">
