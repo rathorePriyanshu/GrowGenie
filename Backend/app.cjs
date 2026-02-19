@@ -5,6 +5,7 @@ const quizs = require("./routes/quizs.cjs");
 const careers = require("./routes/careers.cjs");
 const otps = require("./routes/otps.cjs");
 const users = require("./routes/auth.cjs");
+const roadmaps = require("./routes/roadmap.cjs");
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
@@ -35,6 +36,7 @@ app.use('/api', quizs);
 app.use('/api', careers);
 app.use('/api', otps);
 app.use('/api', users);
+app.use('/api', roadmaps);
 
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
