@@ -192,7 +192,7 @@ router.post('/auth/forgot-password', async (req, res) => {
 
         const user = await User.findOne({ email: email });
         if (!user) return res.status(404).json({ message: "User not found" });
-        if (user.authProvider === "google") return res.status(404).json({ message: "you're a google user,setup a password first" });
+        // if (user.authProvider === "google") return res.status(404).json({ message: "you're a google user,setup a password first" });
 
         const resetToken = crypto.randomBytes(32).toString('hex');
 
