@@ -1,20 +1,36 @@
 import { FaRegStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import type { CareerInfo } from "../servies/types";
+import { useRoadmapStore } from "../store/roadmap";
 
 interface FeedbackMainCardProps {
-  Career: { title: string };
   Stream: string;
   Feedback: string;
   Skills: string[];
+  CareerInfo: CareerInfo;
 }
 
 const FeedbackMainCard = ({
-  Career,
   Stream,
   Feedback,
   Skills,
+  CareerInfo,
 }: FeedbackMainCardProps) => {
   const navigate = useNavigate();
+  const { LoadRoadmap } = useRoadmapStore();
+
+  const handleClick = async () => {
+    try {
+      const roadmap = await LoadRoadmap(
+        CareerInfo.career_id,
+        CareerInfo.career_name,
+        CareerInfo.career_source,
+      );
+      navigate(`/roadmap/${roadmap._id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="bg-secondary rounded-xl shadow-lg overflow-hidden @container">
@@ -32,7 +48,7 @@ const FeedbackMainCard = ({
             Top Recommendations
           </span>
           <h2 className="text-gray-100 text-2xl mt-1 font-bold leading-tight tracking-[-0.015em]">
-            {Career.title}
+            {CareerInfo.career_name}
           </h2>
           <p className="text-gray-500 text-base font-normal leading-relaxed mt-3 mb-6">
             {Feedback}
@@ -40,7 +56,7 @@ const FeedbackMainCard = ({
             {Skills}
           </p>
           <button
-            onClick={() => navigate("/")}
+            onClick={handleClick}
             className="flex min-w-[84px] w-fit cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-6 bg-buttonPrimary text-white text-base font-medium leading-normal shadow-sm hover:bg-buttonSecondary transition-all duration-300 ease-in-out transform hover:scale-105"
           >
             View Roadmap

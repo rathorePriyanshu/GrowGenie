@@ -2,6 +2,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { useQuizStore } from "../store/quiz";
 import { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   const { quizess, loading, loadQuizes, selectAnswer, submit } = useQuizStore();
@@ -14,11 +15,7 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   }, [classLevel]);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (!quizess.length) {

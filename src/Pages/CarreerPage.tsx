@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import CarreerCard from "../Components/CarreerCard";
 import { useCareerStore } from "../store/careers";
+import Loading from "../Components/Loading";
+import { useRoadmapStore } from "../store/roadmap";
 
 const CarreerPage = () => {
   const { careers, loadCareer, loading, selectedStream } = useCareerStore();
+  const RoadMaploading = useRoadmapStore((s) => s.loading);
 
   console.log("careers", careers);
 
@@ -11,12 +14,15 @@ const CarreerPage = () => {
     loadCareer();
   }, [selectedStream, loadCareer]);
 
-  if (loading) {
+  if (RoadMaploading)
     return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
+      <div className="h-[100vh]">
+        <Loading />
       </div>
     );
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (

@@ -1,6 +1,7 @@
 import { HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import type { CareerData } from "../servies/types";
+import { useRoadmapStore } from "../store/roadmap";
 
 interface CarreerCardProps {
   career: CareerData;
@@ -8,6 +9,20 @@ interface CarreerCardProps {
 
 const CarreerCard = ({ career }: CarreerCardProps) => {
   const navigate = useNavigate();
+  const { LoadRoadmap } = useRoadmapStore();
+
+  const handleClick = async () => {
+    try {
+      const roadmap = await LoadRoadmap(
+        career.career_id,
+        career.title,
+        career.source,
+      );
+      navigate(`/roadmap/${roadmap._id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -24,7 +39,7 @@ const CarreerCard = ({ career }: CarreerCardProps) => {
             {career.description}
           </p>
           <button
-            onClick={() => navigate("/")}
+            onClick={handleClick}
             className="flex w-full mt-2 max-w-xs items-center gap-2 justify-center font-medium text-lg rounded-md px-6 py-2 text-white bg-buttonPrimary hover:bg-gray-600"
           >
             View Roadmap
