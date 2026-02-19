@@ -1,11 +1,13 @@
 const express = require('express');
-const quizdata = require('../utils/data.cjs')
+const quizdata = require('../utils/data.cjs');
+const auth = require("../middleware/auth.cjs");
+const { enrichCareerData } = require("../utils/methods.cjs");
 const Quiz = require("../models/quiz.cjs");
 const { getAIFeedback, getCareerSuggestion } = require("../utils/ai.cjs");
 
 const router = express.Router();
 
-router.get('/quiz', async (req, res) => {
+router.get('/quiz', auth, async (req, res) => {
     try {
         const { classLevel } = req.query;
 
@@ -35,7 +37,7 @@ router.get('/quiz', async (req, res) => {
     }
 })
 
-router.post('/quiz/submit', async (req, res) => {
+router.post('/quiz/submit', auth, async (req, res) => {
     try {
         const { answers } = req.body;
 
@@ -66,11 +68,14 @@ router.post('/quiz/submit', async (req, res) => {
         const aiFeedback = await getAIFeedback(recommendedStream, allSkills);
         const careers = await getCareerSuggestion(recommendedStream, allSkills);
 
+        const careerInfo = careers.map((career) => enrichCareerData(career));
+
         res.json({
             recommendedStream,
             topskills: allSkills.slice(0, 3),
             careers,
-            aiFeedback
+            aiFeedback,
+            careerInfo,
         });
 
     } catch (err) {

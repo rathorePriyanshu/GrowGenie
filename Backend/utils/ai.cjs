@@ -1,4 +1,5 @@
 const { OpenAI } = require("openai");
+const { SYSTEM_PROMPT, userRoadmapPrompt } = require("./methods.cjs")
 require("dotenv").config();
 
 const client = new OpenAI({
@@ -25,7 +26,7 @@ Suggest 4 career paths they might succeed in.
 Only output the career names, separated by commas.`;
 
     const response = await client.chat.completions.create({
-        model: "Qwen/Qwen3-Next-80B-A3B-Thinking:novita",
+        model: "Qwen/Qwen2.5-1.5B-Instruct:featherless-ai",
         messages: [{ role: "user", content: prompt }],
     });
 
@@ -37,4 +38,37 @@ Only output the career names, separated by commas.`;
         .map(title => ({ title }));
 }
 
-module.exports = { getAIFeedback, getCareerSuggestion };
+async function getRoadmapFromAI(career_name, country) {
+    const response = await client.chat.completions.create({
+        model: "Qwen/Qwen2.5-1.5B-Instruct:featherless-ai",
+        messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: userRoadmapPrompt(career_name, country) }
+        ],
+        temperature: 0.2,
+    });
+
+    let content = response.choices[0].message.content;
+
+    console.log("AI Response:", content);
+
+    if (content.startsWith("```")) {
+        content = content.replace(/```json|```/g, "").trim();
+    }
+
+    try {
+        return JSON.parse(content);
+    } catch (err) {
+        console.error("AI returned invalid JSON:", content);
+        throw new Error("AI returned invalid JSON");
+    }
+}
+
+// async function testRoadmap() {
+//     const roadmapJSON = await getRoadmapFromAI();
+//     console.log(roadmapJSON);
+// }
+
+// testRoadmap();
+
+module.exports = { getAIFeedback, getCareerSuggestion, getRoadmapFromAI };
