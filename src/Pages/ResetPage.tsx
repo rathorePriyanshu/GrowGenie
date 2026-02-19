@@ -4,6 +4,7 @@ import type { ResetPasswordData } from "../servies/types";
 import { getErrorMessage } from "../servies/methods";
 import { ResetPassword } from "../servies/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ResetPage = () => {
   const [searchParams] = useSearchParams();
@@ -37,6 +38,7 @@ const ResetPage = () => {
       }
 
       await ResetPassword(token, data.password);
+      toast.success("Password has been reset succesfully");
       navigate("/auth/login");
     } catch (err) {
       setError("root.server", {

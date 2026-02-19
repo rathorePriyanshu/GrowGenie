@@ -60,6 +60,7 @@ const LoginPage = () => {
     try {
       const currentEmail = getValues("email");
       await forgetPassword(currentEmail);
+      toast.success("Reset Link has been sent to you email");
     } catch (err) {
       setError("root.server", {
         type: "server",
