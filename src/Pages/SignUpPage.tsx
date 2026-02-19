@@ -6,11 +6,14 @@ import type { SignupData } from "../servies/types";
 import { getErrorMessage } from "../servies/methods";
 import { jwtDecode } from "jwt-decode";
 import { useAuthStore } from "../store/auth";
+import Loading from "../Components/Loading";
+import { toast } from "react-toastify";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
+  const { loading, setLoading } = useAuthStore();
+
   const token = sessionStorage.getItem("signupToken");
-  console.log("Signup token:", token);
   const { email } = jwtDecode<{ email: string }>(token!);
 
   const {
@@ -32,18 +35,22 @@ const SignUpPage = () => {
 
   const onsubmit = async (data: SignupData) => {
     try {
+      setLoading(true);
       const res = await Signup(data.name, data.email, data.password);
 
       sessionStorage.removeItem("signupToken");
       localStorage.setItem("accessToken", res.token);
       useAuthStore.getState().setAuth(res.user);
 
+      toast.success("Account created succesfully");
       navigate("/");
     } catch (err) {
       setError("root.server", {
         type: "server",
         message: getErrorMessage(err),
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,6 +64,8 @@ const SignUpPage = () => {
     },
     onError: (err) => console.log("Google login failed:", err),
   });
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex flex-col relative z-10 w-full max-w-5xl items-center">

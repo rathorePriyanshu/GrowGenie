@@ -42,7 +42,6 @@ const NavBar = () => {
             { name: "10th Class", path: "/stream" },
             { name: "12th Class", path: "/seniorstream" },
             { name: "Career", path: "/career" },
-            { name: "RoadMap", path: "/roadmap" },
           ].map((link, index) => (
             <div key={link.name} className="relative flex items-center">
               <Link

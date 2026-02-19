@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useQuizStore } from "../store/quiz";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
+import { toast } from "react-toastify";
 
 const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   const { quizess, loading, loadQuizes, selectAnswer, submit } = useQuizStore();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log("quizess:", quizess);
 
   useEffect(() => {
     loadQuizes(classLevel);
@@ -32,6 +32,7 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
     if (currentIndex < quizess.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
+      toast.success("Quiz Submitted, wait for a while!");
       await submit();
       navigate("/feedback");
     }

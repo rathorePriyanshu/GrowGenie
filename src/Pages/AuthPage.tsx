@@ -5,9 +5,11 @@ import { checkAuth, googleAuth, OTP } from "../servies/api";
 import type { CheckAuthData } from "../servies/types";
 import { getErrorMessage } from "../servies/methods";
 import { useAuthStore } from "../store/auth";
+import Loading from "../Components/Loading";
 
 const AuthPage = () => {
   const navigate = useNavigate();
+  const { loading, setLoading } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -24,12 +26,13 @@ const AuthPage = () => {
 
   const onSubmit = async (data: CheckAuthData) => {
     try {
+      setLoading(true);
       const res = await checkAuth(data.email);
 
       if (!res.exists) {
         const otpres = await OTP(data.email);
         navigate("verify", {
-          state: { verificationId: otpres.verificationId },
+          state: { verificationId: otpres.verificationId, otpSent: true },
         });
       } else {
         sessionStorage.setItem("email", res.email);
@@ -40,6 +43,8 @@ const AuthPage = () => {
         type: "server",
         message: getErrorMessage(err),
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,12 +59,14 @@ const AuthPage = () => {
     onError: (err) => console.log("Google login failed:", err),
   });
 
+  if (loading) return <Loading />;
+
   return (
     <div className="relative z-10 w-full flex flex-col items-center gap-4 max-w-4xl justify-center">
       <div className="w-full flex items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 p-3">
         <div className="w-1/2 p-3">
           <img
-            src="/public/Gemini_Generated_Image_dhsjo6dhsjo6dhsj-removebg-preview.png"
+            src="/Gemini_Generated_Image_dhsjo6dhsjo6dhsj-removebg-preview.png"
             alt=""
           />
         </div>

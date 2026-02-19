@@ -4,9 +4,12 @@ import type { LoginData } from "../servies/types";
 import { getErrorMessage } from "../servies/methods";
 import { forgetPassword, Login } from "../servies/api";
 import { useAuthStore } from "../store/auth";
+import Loading from "../Components/Loading";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { loading, setLoading } = useAuthStore();
   const email = sessionStorage.getItem("email") ?? undefined;
 
   const {
@@ -26,18 +29,22 @@ const LoginPage = () => {
 
   const onsubmit = async (data: LoginData) => {
     try {
+      setLoading(loading);
       const res = await Login(data.email, data.password);
 
       sessionStorage.removeItem("email");
       localStorage.setItem("accessToken", res.token);
       useAuthStore.getState().setAuth(res.user);
 
+      toast.success("Logged in succesfully");
       navigate("/");
     } catch (err) {
       setError("root.server", {
         type: "server",
         message: getErrorMessage(err),
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,6 +67,8 @@ const LoginPage = () => {
       });
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="relative z-10 w-full max-w-md flex flex-col items-center justify-center">

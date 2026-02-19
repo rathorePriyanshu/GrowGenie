@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
 import { FaRegUserCircle } from "react-icons/fa";
+import ButtonSkeleton from "./ButtonSkeleton";
 
 const Login = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user, authInitialized } = useAuthStore();
 
-  if (!authInitialized) return null;
+  if (!authInitialized) return <ButtonSkeleton />;
 
   return (
     <div className="flex flex-row gap-2">
