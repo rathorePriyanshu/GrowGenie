@@ -1,6 +1,12 @@
+const { string } = require("joi");
 const mongoose = require("mongoose");
 
 const careerSchema = new mongoose.Schema({
+    career_id: {
+        type: String,
+        required: true,
+        unique: true
+    },
     title: {
         type: String,
         required: true
@@ -11,28 +17,25 @@ const careerSchema = new mongoose.Schema({
     },
     stream: {
         type: String,
-        enum: ["Science", "Commerce", "Arts"],                                   // restrict to valid streams
+        enum: ["Science", "Commerce", "Arts"],                         // restrict to valid streams
         required: true
     },
     avgSalary: {
         type: String,
         required: true
     },
-    topColleges: [
-        {
-            name: { type: String, required: true },                                               // college name
-            description: { type: String, required: true },                                    // short description
-        }
-    ],
-    roadmap: [
-        {
-            title: { type: String, required: true },       // e.g. "After 10th"
-            steps: { type: [String], required: true }      // e.g. ["Choose Science", "Focus on PCM"]
-        }
-    ],
+    source: {
+        type: String,
+        enum: ["prefilled"],
+        default: "prefilled"
+    },
     img: {
-        type: String,                                                                          // single image URL
+        type: String,                                                          // single image URL
         default: ""
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 });
 

@@ -18,6 +18,7 @@ router.get("/careers", async (req, res) => {
         }
 
         const careers = await Career.find(query);
+
         res.json(careers);
     } catch (err) {
         console.error(err);
