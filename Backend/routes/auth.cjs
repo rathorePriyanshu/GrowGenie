@@ -92,7 +92,7 @@ router.post('/auth/login', async (req, res) => {
             return res.status(400).json({ message: "This account uses Google login. Set a password first." });
         }
 
-        const validPassword = bcrypt.compare(req.body.password, user.password);
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) return res.status(400).json({ message: "Invalid password" });
 
         const refreshToken = jwt.sign(
@@ -136,9 +136,11 @@ router.post('/auth/login', async (req, res) => {
 router.post('/auth/refresh', async (req, res) => {
     try {
         const token = req.cookies.refreshToken;
+        console.log("CookieToken:", token);
         if (!token) return res.status(401).json({ message: "Refresh token missing" });
 
         const storedToken = await Token.findOne({ token });
+        console.log("StoredToken:", storedToken);
         if (!storedToken) return res.status(403).json({ message: "Invalid refresh token" });
 
         jwt.verify(token, process.env.REFRESH_SECRET, async (err, decoded) => {

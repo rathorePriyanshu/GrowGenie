@@ -1,9 +1,11 @@
 import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import type { CareerData, QuizAnswer, QuizQuestion, QuizResult } from "./types";
 import { useAuthStore } from "../store/auth";
+import { toast } from "react-toastify";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
+  withCredentials: true,
 });
 
 const refreshApi = axios.create({
@@ -85,6 +87,9 @@ api.interceptors.response.use(
         localStorage.removeItem("accessToken");
         useAuthStore.getState().clearAuth();
 
+        toast.error("Oops!! Session Expired...", {
+          toastId: "session-expired",
+        });
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
