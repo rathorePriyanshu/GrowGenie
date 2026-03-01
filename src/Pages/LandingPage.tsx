@@ -14,7 +14,7 @@ const LandingPage = () => {
       <p className="mx-auto mt-4 max-w-[700px] font-medium text-gray-400 md:text-xl">
         Get personalized carrer guidance based on your class
       </p>
-      <div className="flex gap-4 items-center justify-center mt-8 sm:flex-row">
+      <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-8">
         <button
           onClick={() => navigate("/stream")}
           className="flex w-full max-w-xs items-center gap-2 justify-center font-medium text-lg rounded-full px-8 py-4 text-white bg-buttonSecondary hover:bg-buttonPrimary"

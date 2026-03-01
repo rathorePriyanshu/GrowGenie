@@ -32,7 +32,7 @@ const Feedback = () => {
   const [mainCareer, ...otherCareer] = result.careerInfo;
 
   return (
-    <main className="px-40 flex flex-1 justify-center py-12">
+    <main className="px-5 flex flex-1 justify-center py-12">
       <div className="flex flex-col max-w-4xl flex-1 gap-8">
         <div className="text-center">
           <h1 className="text-white text-4xl font-bold tracking-tight leading-tight">
