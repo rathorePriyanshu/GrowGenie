@@ -202,22 +202,29 @@ const Roadmap = () => {
             </h2>
             <div className="px-4 py-2">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-center">
-                {roadmap?.roadmap_json.salary_growth.map((growth) => (
-                  <>
-                    <div className="flex-1">
-                      <h3 className="text-white font-bold">{growth.role}</h3>
-                      <p className="text-sm text-white/40">
-                        ₹{growth.salary_range} - {growth.experience} experience
-                      </p>
-                    </div>
-                    <span className="text-2xl text-buttonPrimary hidden md:block">
-                      <IoMdArrowRoundForward />
-                    </span>
-                    <span className="text-2xl text-buttonPrimary md:hidden rotate-90 mx-auto">
-                      <IoMdArrowRoundForward />
-                    </span>
-                  </>
-                ))}
+                {roadmap?.roadmap_json.salary_growth.map(
+                  (growth, index, arr) => (
+                    <>
+                      <div className="flex-1">
+                        <h3 className="text-white font-bold">{growth.role}</h3>
+                        <p className="text-sm text-white/40">
+                          ₹{growth.salary_range} - {growth.experience}{" "}
+                          experience
+                        </p>
+                      </div>
+                      {index < arr.length - 1 && (
+                        <>
+                          <span className="text-2xl text-buttonPrimary hidden md:block">
+                            <IoMdArrowRoundForward />
+                          </span>
+                          <span className="text-2xl text-buttonPrimary md:hidden rotate-90 mx-auto">
+                            <IoMdArrowRoundForward />
+                          </span>
+                        </>
+                      )}
+                    </>
+                  ),
+                )}
               </div>
             </div>
 

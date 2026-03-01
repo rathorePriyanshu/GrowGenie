@@ -6,7 +6,8 @@ import Loading from "./Loading";
 import { toast } from "react-toastify";
 
 const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
-  const { quizess, loading, loadQuizes, selectAnswer, submit } = useQuizStore();
+  const { quizess, loading, answers, loadQuizes, selectAnswer, submit } =
+    useQuizStore();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -20,7 +21,7 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
 
   if (!quizess.length) {
     return (
-      <div className="flex justify-center items-center h-[60vh] text-white text-2xl">
+      <div className="flex flex-1 justify-center items-center h-[60vh] text-white text-2xl">
         No quizzes found.
       </div>
     );
@@ -33,8 +34,10 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
       if (currentIndex < quizess.length - 1) {
         setCurrentIndex(currentIndex + 1);
       } else {
-        toast.success("Quiz Submitted, wait for a while!");
-        await submit();
+        if (answers.length) {
+          toast.success("Quiz Submitted, wait for a while!");
+          await submit();
+        }
         navigate("/feedback");
       }
     } catch (err) {

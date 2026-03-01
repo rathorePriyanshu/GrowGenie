@@ -9,13 +9,21 @@ const Feedback = () => {
   const roadmapLoading = useRoadmapStore((s) => s.loading);
   console.log("result", result);
 
-  if (loading || roadmapLoading) {
+  if (roadmapLoading) {
+    return (
+      <div className="flex-1">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (loading) {
     return <Loading />;
   }
 
   if (!result) {
     return (
-      <div className="flex justify-center items-center h-[60vh] text-white text-2xl">
+      <div className="flex flex-1 justify-center items-center h-[60vh] text-white text-2xl">
         No result found
       </div>
     );

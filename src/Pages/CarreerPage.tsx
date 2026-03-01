@@ -14,7 +14,7 @@ const CarreerPage = () => {
 
   if (RoadMaploading)
     return (
-      <div className="h-[100vh]">
+      <div className="flex-1">
         <Loading />
       </div>
     );
