@@ -24,7 +24,7 @@ const CarreerPage = () => {
   }
 
   return (
-    <main className="px-40 flex flex-1 justify-center py-10">
+    <main className="px-5 flex flex-1 justify-center py-10">
       <div className="flex flex-col max-w-5xl flex-1">
         <div className="flex flex-col gap-4 mb-12 text-center">
           <h1 className="text-5xl font-bold text-white leading-tight tracking-tighter">

@@ -62,16 +62,18 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
           {quiz.options.map((opt) => (
             <label
               key={opt.id}
-              className="group flex items-center gap-4 border-2 rounded-2xl cursor-pointer p-4 border-[#29382f] bg-[#29382f] hover:bg-[#3d5245]"
+              className="group flex w-full items-center gap-4 border-2 rounded-2xl cursor-pointer p-4 border-[#29382f] bg-[#29382f] hover:bg-[#3d5245]"
             >
               <input
-                className="radio-custom"
+                className="radio-custom w-5 h-5 shrink-0"
                 name={`stream-${quiz.id}`}
                 value={opt.id}
                 type="radio"
                 onChange={() => handleSelected(opt.id)}
               />
-              <span className="text-gray-200 font-medium">{opt.text}</span>
+              <span className=" text-gray-200 font-medium leading-relaxed break-words overflow-hidden">
+                {opt.text}
+              </span>
             </label>
           ))}
         </div>

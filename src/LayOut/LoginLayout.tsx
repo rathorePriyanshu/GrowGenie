@@ -7,7 +7,7 @@ const LoginLayout = () => {
         <div className="absolute h-96 w-96 bg-buttonPrimary/10 blur-3xl -top-20 -left-20"></div>
         <div className="absolute h-96 w-96 bg-buttonPrimary/10 blur-3xl -bottom-20 -right-20"></div>
       </div>
-      <div className="relative z-10 w-full min-h-full grid place-items-center py-4 px-4">
+      <div className="relative z-10 w-full min-h-full grid place-items-center p-4">
         <Outlet />
       </div>
     </div>

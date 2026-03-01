@@ -50,7 +50,7 @@ const ResetPage = () => {
 
   return (
     <div className="relative z-10 w-full flex flex-col items-center max-w-lg justify-center">
-      <div className="w-full flex flex-col items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 py-5 px-10">
+      <div className="w-full flex flex-col items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 py-5 px-4 sm:px-10">
         <div className="flex size-14 items-center justify-center text-buttonPrimary rounded-full border-2 border-gray-700 bg-[#111714] text-center mb-2">
           <MdLockReset size={30} />
         </div>

@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useRoadmapStore } from "../store/roadmap";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../store/auth";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { LoadSavedRoadmaps, DeleteSavedRoadmap, savedRoadmaps } =
     useRoadmapStore();
+  const { user } = useAuthStore();
   const sectionRef = useRef<HTMLElement | null>(null);
   const dashboardRef = useRef<HTMLElement | null>(null);
 
@@ -101,7 +103,7 @@ const ProfilePage = () => {
                 <div className="bg-ProfileImage w-20 min-h-20 sm:w-24 sm:min-h-24 aspect-square bg-cover shrink-0 bg-center bg-no-repeat rounded-full"></div>
                 <div className="flex flex-col justify-center">
                   <p className="font-bold text-white leading-normal text-xl sm:text-[22px] tracking-[-0.015em]">
-                    Priyanshu Rathore
+                    {user?.name || user?.email}
                   </p>
                   <p className="text-sm sm:text-base font-normal leading-normal text-white/40">
                     Grow Genie User
@@ -165,7 +167,7 @@ const ProfilePage = () => {
             <h2 className="text-[22px] text-white font-bold tracking-[-0.015rem] leading-tight px-2">
               Settings
             </h2>
-            <div className="p-2 divide-y w-1/2 border border-[#395646] bg-[#151d19] divide-[#395646] rounded-xl">
+            <div className="p-2 divide-y w-full md:w-1/2 border border-[#395646] bg-[#151d19] divide-[#395646] rounded-xl">
               <a
                 className="block w-full text-left p-2 text-white hover:bg-white/5 rounded-t-lg transition-colors"
                 href="#"

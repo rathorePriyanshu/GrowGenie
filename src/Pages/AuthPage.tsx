@@ -65,16 +65,16 @@ const AuthPage = () => {
 
   return (
     <div className="relative z-10 w-full flex flex-col items-center gap-4 max-w-4xl justify-center">
-      <div className="w-full flex items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 p-3">
-        <div className="w-1/2 p-3">
+      <div className="w-full flex flex-col md:flex-row items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 p-1 sm:p-3">
+        <div className="w-full hidden sm:flex sm:w-1/2 p-3">
           <img
             src="/Gemini_Generated_Image_dhsjo6dhsjo6dhsj-removebg-preview.png"
             alt=""
           />
         </div>
-        <div className="w-1/2 flex flex-col items-center">
-          <div className="relative z-10 w-3/4 flex flex-col items-center gap-3 justify-center">
-            <div className="w-full flex flex-col items-center rounded-xl bg-[#111714] border border-primary/20 shadow-2xl shadow-primary/10 py-2 px-4">
+        <div className="w-full sm:w-1/2 flex flex-col items-center">
+          <div className="relative z-10 w-full p-2 sm:p-0 sm:w-3/4 flex flex-col items-center gap-3 justify-center">
+            <div className="w-full flex flex-col items-center rounded-xl bg-[#111714] border border-primary/20 shadow-2xl shadow-primary/10 py-2 px-2 sm:px-4">
               <h1 className="w-full text-white font-bold text-3xl leading-tight tracking-tight pb-2 text-center">
                 Welcome!
               </h1>

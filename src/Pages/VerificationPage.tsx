@@ -112,8 +112,8 @@ const VerificationPage = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className=" relative z-10 w-full flex flex-col items-center gap-5 max-w-xl justify-center">
-      <div className="w-full flex flex-col items-center rounded-xl bg-secondary border border-primary/20 shadow-2xl  shadow-secondary/20 p-6">
+    <div className="absolute z-10 w-full flex flex-col items-center gap-5 justify-center">
+      <div className="sm:w-full flex flex-col items-center rounded-xl max-w-xl bg-secondary border border-primary/20 shadow-2xl  shadow-secondary/20 p-2 sm:p-6">
         <div
           className={`flex size-16 items-center justify-center  rounded-full  text-center mb-4  transition-all ${isOTPComplete ? "border-buttonPrimary bg-buttonPrimary/80  text-white hover:bg-buttonPrimary/20" : " text-gray-500 border-2 border-gray-700 bg-[#111714]"}`}
         >
@@ -130,7 +130,7 @@ const VerificationPage = () => {
             onSubmit={handleSubmit(onsubmit)}
             className="flex flex-col items-center"
           >
-            <div className="flex gap-3 mb-8">
+            <div className="flex sm:gap-3 gap-2 mb-8">
               {Array.from({ length: 6 }).map((_, index) => (
                 <input
                   key={index}
@@ -142,7 +142,7 @@ const VerificationPage = () => {
                     required: true,
                     pattern: /^[0-9]$/,
                   })}
-                  className="w-12 h-14 bg-secondary text-white font-bold rounded-full focus:outline-none focus:border-buttonPrimary border border-white text-center"
+                  className="w-8 h-10 sm:w-12 sm:h-14 bg-secondary text-white font-bold rounded-full focus:outline-none focus:border-buttonPrimary border border-white text-center"
                   type="text"
                   inputMode="numeric"
                   maxLength={1}

@@ -69,17 +69,17 @@ const SignUpPage = () => {
 
   return (
     <div className="flex flex-col relative z-10 w-full max-w-5xl items-center">
-      <div className="flex w-full items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 p-3">
-        <div className="w-1/2 mb-4">
+      <div className="flex flex-col sm:flex-row w-full items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 p-3">
+        <div className="w-full hidden sm:flex sm:w-1/2 mb-4">
           <img
             src="/Gemini_Generated_Image_26bfmn26bfmn26bf-removebg-preview.png"
             alt="people doing research"
           />
         </div>
 
-        <div className="w-1/2 flex flex-col items-center">
-          <div className="flex flex-col relative z-10 w-3/4 items-center">
-            <div className="flex flex-col w-full items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 px-4 py-2">
+        <div className="w-full sm:w-1/2 flex flex-col items-center">
+          <div className="flex flex-col relative z-10 w-full sm:w-3/4 items-center">
+            <div className="flex flex-col w-full items-center rounded-xl bg-[#111b17] border border-primary/20 shadow-2xl shadow-primary/10 px-2 sm:px-4 py-2">
               <h1 className="w-full text-white font-bold leading-tight tracking-tight text-3xl text-center ">
                 Create Your Account
               </h1>
