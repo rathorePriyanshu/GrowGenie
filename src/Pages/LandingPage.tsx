@@ -1,8 +1,10 @@
 import { HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { useTour } from "../Components/TourContext";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { startTour } = useTour();
 
   return (
     <div className="w-full max-w-2xl px-4 py-16">
@@ -28,6 +30,15 @@ const LandingPage = () => {
           <HiArrowLongRight />
         </button>
       </div>
+      <button
+        onClick={() => {
+          console.log("BUTTON CLICKED");
+          startTour();
+        }}
+        className="mt-6 text-sm text-white/60 hover:text-white transition-colors underline"
+      >
+        Take a quick tour
+      </button>
     </div>
   );
 };
