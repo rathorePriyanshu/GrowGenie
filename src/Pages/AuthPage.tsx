@@ -6,6 +6,7 @@ import type { CheckAuthData } from "../servies/types";
 import { getErrorMessage } from "../servies/methods";
 import { useAuthStore } from "../store/auth";
 import Loading from "../Components/Loading";
+import { toast } from "react-toastify";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ const AuthPage = () => {
 
       localStorage.setItem("accessToken", backendRes.token);
       useAuthStore.getState().setAuth(backendRes.user);
+      toast.success("logged in succesfully");
       navigate("/");
     },
     onError: (err) => console.log("Google login failed:", err),

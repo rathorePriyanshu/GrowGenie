@@ -2,6 +2,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import type { CareerData } from "../servies/types";
 import { useRoadmapStore } from "../store/roadmap";
+import { toast } from "react-toastify";
 
 interface CarreerCardProps {
   career: CareerData;
@@ -21,12 +22,18 @@ const CarreerCard = ({ career }: CarreerCardProps) => {
       navigate(`/roadmap/${roadmap._id}`);
     } catch (err) {
       console.error(err);
+      toast.error("failed to load roadmap", {
+        toastId: "roadmap-error",
+      });
     }
   };
 
   return (
     <>
-      <div className="flex flex-col overflow-hidden rounded-lg shadow-lg shadow-black/20 transition-shadow duration-300 bg-gray-900 border border-[#29382f]">
+      <div
+        data-tour="career-card"
+        className="flex flex-col overflow-hidden rounded-lg shadow-lg shadow-black/20 transition-shadow duration-300 bg-gray-900 border border-[#29382f]"
+      >
         <div
           className="w-full h-48 bg-center bg-cover bg-no-repeat"
           style={{ backgroundImage: `url(${career.img})` }}
@@ -39,6 +46,7 @@ const CarreerCard = ({ career }: CarreerCardProps) => {
             {career.description}
           </p>
           <button
+            data-tour="login-cta"
             onClick={handleClick}
             className="flex w-full mt-2 max-w-xs items-center gap-2 justify-center font-medium text-lg rounded-md px-6 py-2 text-white bg-buttonPrimary hover:bg-gray-600"
           >

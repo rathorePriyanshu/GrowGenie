@@ -29,12 +29,19 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   const quiz = quizess[currentIndex];
 
   const handleNext = async () => {
-    if (currentIndex < quizess.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      toast.success("Quiz Submitted, wait for a while!");
-      await submit();
-      navigate("/feedback");
+    try {
+      if (currentIndex < quizess.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        toast.success("Quiz Submitted, wait for a while!");
+        await submit();
+        navigate("/feedback");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong. Please try again later", {
+        toastId: "loading-error",
+      });
     }
   };
 

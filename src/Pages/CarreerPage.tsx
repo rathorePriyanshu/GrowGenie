@@ -8,8 +8,6 @@ const CarreerPage = () => {
   const { careers, loadCareer, loading, selectedStream } = useCareerStore();
   const RoadMaploading = useRoadmapStore((s) => s.loading);
 
-  console.log("careers", careers);
-
   useEffect(() => {
     loadCareer();
   }, [selectedStream, loadCareer]);

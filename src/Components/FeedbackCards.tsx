@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { CareerInfo } from "../servies/types";
 import { useRoadmapStore } from "../store/roadmap";
+import { toast } from "react-toastify";
 
 interface FeedbackCardsProps {
   CareerInfo: CareerInfo[];
@@ -20,6 +21,9 @@ const FeedbackCards = ({ CareerInfo }: FeedbackCardsProps) => {
       navigate(`/roadmap/${roadmap._id}`);
     } catch (err) {
       console.error(err);
+      toast.error("failed to load roadmap", {
+        toastId: "roadmap-error",
+      });
     }
   };
 

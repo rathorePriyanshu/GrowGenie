@@ -80,13 +80,7 @@ const StreamSelection = () => {
           </div>
           <div className="flex items-center justify-center gap-4 mt-12 sm:flex-row">
             <button
-              onClick={() => navigate("/quiz")}
-              className="flex font-medium items-center gap-2 justify-center text-lg rounded-full px-16 py-4 text-white bg-[#29382f] hover:scale-105 hover:bg-buttonPrimary hover:text-black"
-            >
-              <MdOutlineQuiz />
-              Take Quiz
-            </button>
-            <button
+              data-tour="stream-selection"
               onClick={() => {
                 navigate("/career");
               }}
@@ -94,6 +88,14 @@ const StreamSelection = () => {
             >
               <MdOutlineTravelExplore />
               Browse Careers
+            </button>
+            <button
+              data-tour="quiz-btn"
+              onClick={() => navigate("/quiz")}
+              className="flex font-medium items-center gap-2 justify-center text-lg rounded-full px-16 py-4 text-white bg-[#29382f] hover:scale-105 hover:bg-buttonPrimary hover:text-black"
+            >
+              <MdOutlineQuiz />
+              Take Quiz
             </button>
           </div>
         </div>

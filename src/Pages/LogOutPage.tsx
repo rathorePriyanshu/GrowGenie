@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
+import { toast } from "react-toastify";
 
 const LogOutPage = () => {
   const navigate = useNavigate();
@@ -7,6 +8,7 @@ const LogOutPage = () => {
   const handleLogout = async () => {
     localStorage.removeItem("accessToken");
     useAuthStore.getState().clearAuth();
+    toast.success("logged out succesfully");
     navigate("/");
   };
 

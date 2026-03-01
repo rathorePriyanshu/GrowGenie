@@ -43,7 +43,7 @@ const Roadmap = () => {
       <div className="flex flex-col h-full grow">
         <div className="flex gap-2 justify-start px-5 py-4">
           <button
-            onClick={() => navigate("/career")}
+            onClick={() => navigate(-1)}
             className="px-4 py-2 flex rounded-lg bg-buttonSecondary hover:scale-110"
           >
             <span className="text-center text-buttonPrimary">
@@ -233,6 +233,7 @@ const Roadmap = () => {
             </div>
             <div className="p-4 mt-6">
               <button
+                data-tour="roadmap-section"
                 onClick={handleClick}
                 className="w-full bg-buttonPrimary text-white font-bold py-4 px-6 rounded-lg text-lg text-center shadow-glow hover:bg-green-500 transition-all"
               >
