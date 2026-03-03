@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const mongoose = require("mongoose");
 const QuizData = require("./utils/data.cjs");
 const CareerData = require('./utils/data2.cjs');
@@ -5,7 +7,7 @@ const Career = require('./models/career.cjs');
 const Quiz = require("./models/quiz.cjs");
 
 async function main() {
-  await mongoose.connect("mongodb://localhost/Grow-genie");
+  await mongoose.connect(process.env.MONGO_URI);
   console.log("✅ MongoDB connected for seeding");
 }
 

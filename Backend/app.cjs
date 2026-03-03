@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
@@ -7,21 +8,19 @@ const otps = require("./routes/otps.cjs");
 const users = require("./routes/auth.cjs");
 const roadmaps = require("./routes/roadmap.cjs");
 const cookieParser = require('cookie-parser');
-const dotenv = require('dotenv');
 
-dotenv.config();
 
 const app = express();
 app.use(express.json());
 
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 const port = process.env.PORT || 8080;
 
 
 async function main() {
-  await mongoose.connect("mongodb://localhost/Grow-genie");
+  await mongoose.connect(process.env.MONGO_URI);
   console.log("✅ MongoDB connection successful");
 }
 

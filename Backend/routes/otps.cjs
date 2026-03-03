@@ -2,7 +2,6 @@ const express = require('express');
 const { OTP, validateSendOTP, validateVerifyOTP } = require('../models/otp.cjs');
 const { transport } = require('../utils/email.cjs');
 const bcrypt = require('bcryptjs');
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const router = express.Router();

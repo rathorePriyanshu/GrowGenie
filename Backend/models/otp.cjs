@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const joi = require('joi');
-const { default: e } = require('express');
+const express = require('express');
 
 const otpSchema = new mongoose.Schema({
     email: {
