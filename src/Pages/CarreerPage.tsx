@@ -12,16 +12,12 @@ const CarreerPage = () => {
     loadCareer();
   }, [selectedStream, loadCareer]);
 
-  if (RoadMaploading)
+  if (RoadMaploading || loading)
     return (
       <div className="flex-1">
         <Loading />
       </div>
     );
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <main className="px-5 flex flex-1 justify-center py-10">
