@@ -1,6 +1,6 @@
 const { OpenAI } = require("openai");
 const { SYSTEM_PROMPT, userRoadmapPrompt } = require("./methods.cjs")
-require("dotenv").config();
+
 
 const client = new OpenAI({
     baseURL: "https://router.huggingface.co/v1",

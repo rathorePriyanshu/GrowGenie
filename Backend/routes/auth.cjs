@@ -6,7 +6,7 @@ const { transport } = require('../utils/email.cjs');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-require('dotenv').config();
+
 
 const router = express.Router();
 
