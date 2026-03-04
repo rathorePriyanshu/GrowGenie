@@ -1,6 +1,7 @@
 const express = require('express');
 const { OTP, validateSendOTP, validateVerifyOTP } = require('../models/otp.cjs');
 const { transport } = require('../utils/email.cjs');
+const otpTemplate = require("../utils/templates/otp.cjs");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -26,7 +27,7 @@ router.post('/otp', async (req, res) => {
             from: `"Grow-Genie" <${process.env.EMAIL_USER}>`,
             to: req.body.email,
             subject: "Your Verification Code",
-            html: `<h2>Your OTP code is ${otp}</h2>. <p>It is valid for 5 minutes only, please do not share it with anyone.</p>`,
+            html: otpTemplate(otp),
         });
 
         res.json({ message: "OTP sent to email", verificationId: otpDoc._id });
