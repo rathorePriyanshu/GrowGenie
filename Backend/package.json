@@ -4,7 +4,11 @@
   "main": "app.cjs",
   "scripts": {
     "start": "node app.cjs",
-    "seed": "node index.cjs"
+    "seed": "node index.cjs",
+    "build": "echo build"
+  },
+  "engines": {
+    "node": "24.x"
   },
   "keywords": [],
   "author": "",
