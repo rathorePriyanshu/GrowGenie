@@ -51,6 +51,7 @@ const AuthPage = () => {
 
   const login = useGoogleLogin({
     onSuccess: async (res) => {
+      console.log("CLIENT ID:", import.meta.env.VITE_GOOGLE_CLIENT_ID);
       const backendRes = await googleAuth(res.access_token);
 
       localStorage.setItem("accessToken", backendRes.token);
