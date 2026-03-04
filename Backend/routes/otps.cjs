@@ -23,12 +23,21 @@ router.post('/otp', async (req, res) => {
             purpose: "verification",
         })
 
-        await transport.sendMail({
-            from: `"Grow-Genie" <${process.env.EMAIL_USER}>`,
-            to: req.body.email,
-            subject: "Your Verification Code",
-            html: otpTemplate(otp),
-        });
+        try {
+            await transport.sendMail({
+                from: `"Grow-Genie" <${process.env.EMAIL_USER}>`,
+                to: req.body.email,
+                subject: "Your Verification Code",
+                html: otpTemplate(otp),
+            });
+        } catch (mailErr) {
+            console.error("EMAIL ERROR:", mailErr);
+
+            // don't crash the server
+            return res.status(500).json({
+                message: "Email service failed"
+            });
+        }
 
         res.json({ message: "OTP sent to email", verificationId: otpDoc._id });
 
