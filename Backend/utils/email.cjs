@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
 
 
+const nodemailer = require("nodemailer");
+
 const transport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -8,8 +10,10 @@ const transport = nodemailer.createTransport({
     family: 4,
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+        pass: process.env.EMAIL_PASS,
+    },
 });
+
+module.exports = { transport };
 
 module.exports.transport = transport;
