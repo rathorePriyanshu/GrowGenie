@@ -24,22 +24,25 @@ app.use(
   })
 );
 
-app.options("*", cors());
 
 const port = process.env.PORT || 8080;
 
+async function startServer() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("✅ MongoDB connected");
 
-async function main() {
-  await mongoose.connect(process.env.MONGO_URI);
-  console.log("✅ MongoDB connection successful");
+    app.listen(port, () => {
+      console.log(`🚀 Server running on port ${port}`);
+    });
+
+  } catch (err) {
+    console.error("Mongo connection failed:", err);
+    process.exit(1);
+  }
 }
 
-main()
-  .then(() => {
-    console.log("connection successful");
-  }).catch((err) => {
-    console.log(err);
-  });
+startServer();
 
 app.use('/api', quizs);
 app.use('/api', careers);
