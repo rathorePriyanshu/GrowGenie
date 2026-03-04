@@ -3,6 +3,7 @@ const { User, validateUser, validateUserDetails, validateUserPassword, validateU
 const auth = require('../middleware/auth.cjs');
 const { Token } = require('../models/token.cjs');
 const { transport } = require('../utils/email.cjs');
+const resetPasswordTemplate = require("../utils/templates/resetlink.cjs");
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -167,7 +168,7 @@ router.post('/auth/refresh', async (req, res) => {
     }
 });
 
-router.post('/auth/logout', auth, async (req, res) => {
+router.post('/auth/logout', async (req, res) => {
     try {
         const token = req.cookies.refreshToken;
 
@@ -210,9 +211,7 @@ router.post('/auth/forgot-password', async (req, res) => {
             from: `"Grow-Genie" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Password Reset Request",
-            html: `<p>You requested a password reset.</p>
-                   <p><a href="${resetlink}">Click here to reset your password</a></p>
-                   <p>This link will expire in 15 minutes.</p>`,
+            html: resetPasswordTemplate(resetlink),
         })
 
         res.json({ message: "Password reset link sent to email" });
