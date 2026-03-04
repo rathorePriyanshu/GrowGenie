@@ -27,7 +27,12 @@ const Roadmap = () => {
     }
   }, [id]);
 
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <div className="flex-1">
+        <Loading />
+      </div>
+    );
 
   const handleClick = async () => {
     try {
