@@ -1,13 +1,20 @@
 const express = require('express');
 const { OTP, validateSendOTP, validateVerifyOTP } = require('../models/otp.cjs');
-const { transport } = require('../utils/email.cjs');
+const sendEmail = require("../utils/email.cjs");
 const otpTemplate = require("../utils/templates/otp.cjs");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { rateLimit } = require("express-rate-limit");
 
 const router = express.Router();
 
-router.post('/otp', async (req, res) => {
+const otpLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 5, // 1 minute me 5 OTP request
+    message: { message: "Too many OTP requests, try again later." }
+});
+
+router.post('/otp', otpLimiter, async (req, res) => {
     try {
         const { error } = validateSendOTP(req.body);
         if (error) return res.status(400).json({ message: error.details[0].message });
@@ -23,21 +30,9 @@ router.post('/otp', async (req, res) => {
             purpose: "verification",
         })
 
-        try {
-            await transport.sendMail({
-                from: `"Grow-Genie" <${process.env.EMAIL_USER}>`,
-                to: req.body.email,
-                subject: "Your Verification Code",
-                html: otpTemplate(otp),
-            });
-        } catch (mailErr) {
-            console.error("EMAIL ERROR:", mailErr);
-
-            // don't crash the server
-            return res.status(500).json({
-                message: "Email service failed"
-            });
-        }
+        await sendEmail(req.body.email, otpTemplate(otp));
+        console.log("Email function finished");
+        console.log("email ", req.body.email);
 
         res.json({ message: "OTP sent to email", verificationId: otpDoc._id });
 

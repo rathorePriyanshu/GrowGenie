@@ -1,18 +1,23 @@
-const nodemailer = require("nodemailer");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 
-const transport = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    logger: true,
-    debug: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-});
+const client = SibApiV3Sdk.ApiClient.instance;
+client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
 
-module.exports = { transport };
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
-module.exports.transport = transport;
+async function sendEmail(to, html) {
+    const email = {
+        sender: {
+            name: "GrowGenie",
+            email: process.env.EMAIL_FROM,
+        },
+        to: [{ email: to }],
+        subject: "Your Verification Code",
+        htmlContent: html,
+    };
+
+    const response = await apiInstance.sendTransacEmail(email);
+    console.log("BREVO EMAIL RESPONSE:", response);
+}
+
+module.exports = sendEmail;

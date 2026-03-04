@@ -2,14 +2,20 @@ const express = require('express');
 const { User, validateUser, validateUserDetails, validateUserPassword, validateUserResetToken } = require('../models/user.cjs');
 const auth = require('../middleware/auth.cjs');
 const { Token } = require('../models/token.cjs');
-const { transport } = require('../utils/email.cjs');
+const { transport, default: sendEmail } = require('../utils/email.cjs');
 const resetPasswordTemplate = require("../utils/templates/resetlink.cjs");
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
+const { rateLimit } = require("express-rate-limit");
 
 const router = express.Router();
+
+const linkLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 5, // 1 minute me 5 OTP request
+    message: { message: "Too many requests, try again later." }
+});
 
 router.post('/auth', async (req, res) => {
     try {
@@ -185,7 +191,7 @@ router.post('/auth/logout', async (req, res) => {
     }
 });
 
-router.post('/auth/forgot-password', async (req, res) => {
+router.post('/auth/forgot-password', linkLimiter, async (req, res) => {
     try {
 
         const { error } = validateUser(req.body);
@@ -207,12 +213,7 @@ router.post('/auth/forgot-password', async (req, res) => {
 
         const resetlink = `http://localhost:5173/auth/reset?token=${resetToken}`;
 
-        await transport.sendMail({
-            from: `"Grow-Genie" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: "Password Reset Request",
-            html: resetPasswordTemplate(resetlink),
-        })
+        await sendEmail(user.email, resetPasswordTemplate(resetlink));
 
         res.json({ message: "Password reset link sent to email" });
 
