@@ -1,21 +1,18 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
 import Loading from "../Components/Loading";
-import { toast } from "react-toastify";
 
 const ProtectedRoute = () => {
   const { isAuthenticated, authInitialized } = useAuthStore();
+  const location = useLocation();
 
   if (!authInitialized) return <Loading />;
 
-  if (isAuthenticated) {
-    return <Outlet />;
+  if (!isAuthenticated) {
+    return <Navigate to="/auth/login" replace state={{ from: location }} />;
   }
 
-  toast.error("Login to access", {
-    toastId: "acess-error",
-  });
-  return <Navigate to="/auth" replace />;
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

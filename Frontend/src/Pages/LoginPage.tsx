@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import type { LoginData } from "../servies/types";
 import { getErrorMessage } from "../servies/methods";
 import { forgetPassword, Login } from "../servies/api";
 import { useAuthStore } from "../store/auth";
 import Loading from "../Components/Loading";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { loading, setLoading } = useAuthStore();
   const email = sessionStorage.getItem("email") ?? undefined;
 
@@ -26,6 +28,14 @@ const LoginPage = () => {
     },
     mode: "onChange",
   });
+
+  useEffect(() => {
+    if (location.state?.from) {
+      toast.error("Login to access this page", {
+        toastId: "auth-required",
+      });
+    }
+  }, []);
 
   const onsubmit = async (data: LoginData) => {
     try {
@@ -154,12 +164,12 @@ const LoginPage = () => {
         </form>
         <p className="w-full text-white/40 font-normal leading-normal text-center mb-2">
           Check your email?
-          <a
+          <button
             className="font-normal mx-2 text-buttonPrimary/70 hover:text-buttonPrimary transition-all"
-            href="/auth"
+            onClick={() => navigate("/auth")}
           >
             Login
-          </a>
+          </button>
         </p>
       </div>
     </div>

@@ -4,12 +4,18 @@ import { toast } from "react-toastify";
 
 const LogOutPage = () => {
   const navigate = useNavigate();
+  const clearAuth = useAuthStore((s) => s.clearAuth);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     localStorage.removeItem("accessToken");
-    useAuthStore.getState().clearAuth();
-    toast.success("logged out succesfully");
-    navigate("/");
+
+    clearAuth();
+
+    toast.success("Logged out successfully", {
+      toastId: "logout",
+    });
+
+    navigate("/auth/login", { replace: true });
   };
 
   return (

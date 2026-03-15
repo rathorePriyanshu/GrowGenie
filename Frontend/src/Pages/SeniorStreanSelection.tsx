@@ -23,6 +23,16 @@ const SeniorStreanSelection = () => {
     Arts: <IoIosColorPalette color="white" size={25} />,
   };
 
+  const streams = ["Science", "Commerce", "Arts"] as const;
+
+  const handleStreamToggler = (option: "Science" | "Commerce" | "Arts") => {
+    if (selectedStream === option) {
+      setStream(null);
+    } else {
+      setStream(option);
+    }
+  };
+
   return (
     <main className="flex-grow">
       <section className="relative min-h-[50vh] bg-heroPattern2 flex items-center justify-center bg-cover bg-center py-16">
@@ -48,19 +58,16 @@ const SeniorStreanSelection = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {["Science", "Commerce", "Arts"].map((option) => (
+            {streams.map((option) => (
               <label
                 key={option}
                 className="group flex flex-col items-center border-2 rounded-2xl cursor-pointer p-6 border-[#29382f] bg-[#1a221e] hover:border-buttonPrimary hover:bg-[#1f2a24] space-y-2"
               >
                 <input
-                  onChange={() =>
-                    setStream(option as "Science" | "Commerce" | "Arts")
-                  }
+                  onChange={() => handleStreamToggler(option)}
                   checked={selectedStream === option}
                   className="peer hidden"
-                  name="stream"
-                  type="radio"
+                  type="checkbox"
                 />
                 <div className="flex size-12 items-center justify-center rounded-full border-2 border-[#3d5245] bg-[#111714] transition-all group-hover:border-[#38e07b] group-hover:text-[#111714] peer-checked:border-[#38e07b] peer-checked:bg-[#38e07b] peer-checked:text-[#111714]">
                   {streamIcons[option]}

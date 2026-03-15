@@ -5,18 +5,18 @@ import { getCareers } from "../servies/api";
 interface CareerState {
   careers: CareerData[];
   loading: boolean;
-  selectedStream?: "Science" | "Commerce" | "Arts";
+  selectedStream: "Science" | "Commerce" | "Arts" | null;
 
-  setStream: (stream?: "Science" | "Commerce" | "Arts") => void;
-  loadCareer: () => Promise<void>; // no need to pass stream
+  setStream: (stream?: "Science" | "Commerce" | "Arts" | null) => void;
+  loadCareer: () => Promise<void>;
 }
 
 export const useCareerStore = create<CareerState>((set, get) => ({
   careers: [],
   loading: false,
-  selectedStream: undefined,
+  selectedStream: null,
 
-  setStream: (stream) => set({ selectedStream: stream }),
+  setStream: (stream) => set({ selectedStream: stream || null }),
 
   loadCareer: async () => {
     set({ loading: true });

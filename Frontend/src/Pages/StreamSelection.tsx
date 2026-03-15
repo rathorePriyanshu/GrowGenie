@@ -23,6 +23,16 @@ const StreamSelection = () => {
     Arts: "Explore careers in design, literature, social sciences, and creative fields.",
   };
 
+  const streams = ["Science", "Commerce", "Arts"] as const;
+
+  const handleStreamToggler = (option: "Science" | "Commerce" | "Arts") => {
+    if (selectedStream === option) {
+      setStream(null);
+    } else {
+      setStream(option);
+    }
+  };
+
   return (
     <main className="flex-grow">
       <section className="relative min-h-[50vh] bg-heroPattern flex items-center justify-center bg-cover bg-center py-16">
@@ -55,7 +65,7 @@ const StreamSelection = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {["Science", "Commerce", "Arts"].map((option) => (
+            {streams.map((option) => (
               <label
                 key={option}
                 className="group flex flex-col border-2 rounded-2xl cursor-pointer p-6 border-[#29382f] bg-[#1a221e] hover:border-buttonPrimary hover:bg-[#1f2a24] space-y-2"
@@ -63,13 +73,10 @@ const StreamSelection = () => {
                 <div className="flex justify-between items-center">
                   <h3 className="font-bold text-xl text-white">{option}</h3>
                   <input
-                    onChange={() =>
-                      setStream(option as "Science" | "Commerce" | "Arts")
-                    }
+                    onChange={() => handleStreamToggler(option)}
                     checked={selectedStream === option}
                     className="radio-custom"
-                    name="stream"
-                    type="radio"
+                    type="checkbox"
                   />
                 </div>
                 <p className="text-gray-200 w-4/5 text-sm mt-2">

@@ -49,7 +49,10 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
+    const token = localStorage.getItem("accessToken");
+
     if (
+      token &&
       error.response?.status === 401 &&
       !originalRequest._retry &&
       originalRequest.url !== "/auth/refresh"

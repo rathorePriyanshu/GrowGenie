@@ -116,7 +116,7 @@ const AuthPage = () => {
                   )}
 
                   <button className="w-full flex items-center justify-center rounded-2xl h-12 px-6 text-base font-bold text-black hover:bg-buttonPrimary/40  bg-buttonPrimary transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#111b17] focus:ring-buttonPrimary mt-8">
-                    SignUp
+                    Check Email
                   </button>
                 </div>
               </form>
