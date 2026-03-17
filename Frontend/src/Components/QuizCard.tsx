@@ -32,7 +32,7 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
 
   if (loading)
     return (
-      <div className="flex flex-1">
+      <div className="flex-1">
         <Loading />
       </div>
     );
