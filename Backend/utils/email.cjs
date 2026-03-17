@@ -17,7 +17,6 @@ async function sendEmail(to, html) {
     };
 
     const response = await apiInstance.sendTransacEmail(email);
-    console.log("BREVO EMAIL RESPONSE:", response);
 }
 
 module.exports = sendEmail;

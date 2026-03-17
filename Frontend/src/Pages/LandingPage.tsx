@@ -35,7 +35,7 @@ const LandingPage = () => {
           console.log("BUTTON CLICKED");
           startTour();
         }}
-        className="mt-6 text-sm text-white/60 hover:text-white transition-colors underline"
+        className="mt-6 text-sm text-white/60 hover:text-white transition-colors underline hidden md:block text-center mx-auto"
       >
         Take a quick tour
       </button>

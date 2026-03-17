@@ -3,21 +3,30 @@ import CarreerCard from "../Components/CarreerCard";
 import { useCareerStore } from "../store/careers";
 import Loading from "../Components/Loading";
 import { useRoadmapStore } from "../store/roadmap";
+import AILoading from "../Components/AILoading";
 
 const CarreerPage = () => {
   const { careers, loadCareer, loading, selectedStream } = useCareerStore();
   const RoadMaploading = useRoadmapStore((s) => s.loading);
+  const roadmapMessages = [
+    "Designing your learning path...",
+    "Selecting essential skills...",
+    "Structuring your roadmap...",
+    "Finalizing your roadmap...",
+  ];
 
   useEffect(() => {
     loadCareer();
   }, [selectedStream, loadCareer]);
 
-  if (RoadMaploading || loading)
+  if (loading)
     return (
       <div className="flex-1">
         <Loading />
       </div>
     );
+
+  if (RoadMaploading) return <AILoading messages={roadmapMessages} />;
 
   return (
     <main className="px-5 flex flex-1 justify-center py-10">

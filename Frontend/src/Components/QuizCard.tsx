@@ -2,8 +2,8 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { useQuizStore } from "../store/quiz";
 import { useEffect, useState } from "react";
-import Loading from "./Loading";
 import { toast } from "react-toastify";
+import AILoading from "./AILoading";
 
 const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   const { quizess, loading, answers, loadQuizes, selectAnswer, submit } =
@@ -11,13 +11,18 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const careerMessages = [
+    "Analyzing your preferences...",
+    "Understanding your strengths...",
+    "Matching careers with your profile...",
+    "Preparing your recommendation...",
+  ];
+
   useEffect(() => {
     loadQuizes(classLevel);
   }, [classLevel]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <AILoading messages={careerMessages} />;
 
   if (!quizess.length) {
     return (

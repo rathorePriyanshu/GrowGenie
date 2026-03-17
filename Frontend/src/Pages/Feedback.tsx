@@ -1,3 +1,4 @@
+import AILoading from "../Components/AILoading";
 import FeedbackCards from "../Components/FeedbackCards";
 import FeedbackMainCard from "../Components/FeedbackMainCard";
 import Loading from "../Components/Loading";
@@ -7,19 +8,21 @@ import { useRoadmapStore } from "../store/roadmap";
 const Feedback = () => {
   const { loading, result } = useQuizStore();
   const roadmapLoading = useRoadmapStore((s) => s.loading);
-  console.log("result", result);
+  const roadmapMessages = [
+    "Designing your learning path...",
+    "Selecting essential skills...",
+    "Structuring your roadmap...",
+    "Finalizing your roadmap...",
+  ];
 
-  if (roadmapLoading) {
+  if (loading)
     return (
-      <div className="flex-1">
+      <div className="flex flex-1">
         <Loading />
       </div>
     );
-  }
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (roadmapLoading) return <AILoading messages={roadmapMessages} />;
 
   if (!result) {
     return (

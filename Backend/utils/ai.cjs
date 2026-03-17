@@ -50,7 +50,6 @@ async function getRoadmapFromAI(career_name, country) {
 
     let content = response.choices[0].message.content;
 
-    console.log("AI Response:", content);
 
     if (content.startsWith("```")) {
         content = content.replace(/```json|```/g, "").trim();
