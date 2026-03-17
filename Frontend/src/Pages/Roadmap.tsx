@@ -38,10 +38,16 @@ const Roadmap = () => {
 
   const handleClick = async () => {
     try {
-      await saveRoadmap(id!);
-      toast.success("Roadmap saved succesfully");
+      const res = await saveRoadmap(id!);
+
+      if (res.saved) {
+        toast.success("Roadmap saved succesfully");
+      } else {
+        toast.info("Roadmap already saved");
+      }
     } catch (err) {
       console.error(err);
+      toast.error("Failed to save roadmap");
     }
   };
 

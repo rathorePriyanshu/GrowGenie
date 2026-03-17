@@ -18,6 +18,11 @@ const userRoadmapSchema = new mongoose.Schema({
     }
 });
 
+userRoadmapSchema.index(
+    { user_id: 1, roadmap_id: 1 },
+    { unique: true }
+);
+
 const UserRoadmap = mongoose.model("userRoadmap", userRoadmapSchema);
 
 function validateUserRoadmap(userRoadmap) {

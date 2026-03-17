@@ -21,10 +21,12 @@ const GlobalTour = ({ isAuthenticated, children }: Props) => {
   const startTour = () => {
     navigate("/stream");
 
-    setTimeout(() => {
+    const firstStep = steps[0];
+
+    waitForElement(firstStep.target, () => {
       setStepIndex(0);
       setRun(true);
-    }, 300);
+    });
   };
 
   const waitForElement = (selector: string, callback: () => void) => {

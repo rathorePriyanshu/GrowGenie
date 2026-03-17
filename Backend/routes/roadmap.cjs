@@ -89,12 +89,12 @@ router.post("/roadmaps/save", auth, async (req, res) => {
             });
         } catch (err) {
             if (err.code === 11000) {
-                return res.status(409).json({ message: "Roadmap already saved by user" });
+                return res.status(200).json({ message: "Roadmap already saved by user", saved: false });
             }
             throw err;
         }
 
-        return res.status(201).json({ message: "Roadmap saved successfully" });
+        return res.status(201).json({ message: "Roadmap saved successfully", saved: true });
 
     } catch (err) {
         console.error(err);
@@ -156,7 +156,7 @@ router.delete("/roadmap/save/:id", auth, async (req, res) => {
 
         if (!roadmap_id) return res.status(400).json({ message: "Roadmap ID is required" });
 
-        const deleted = await UserRoadmap.findOneAndDelete({
+        const deleted = await UserRoadmap.deleteMany({
             user_id,
             roadmap_id
         });
