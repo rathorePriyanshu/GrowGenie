@@ -19,5 +19,5 @@ async function sendEmail(to, html) {
     const response = await apiInstance.sendTransacEmail(email);
 }
 
-module.exports = sendEmail;
+module.exports.sendEmail = sendEmail;
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const TOUR_ROADMAP_ID = "6990dbc7d441d87193d137b0";
+const TOUR_ROADMAP_ID = "69b8c38318292800f63f648a";
 
 export const getErrorMessage = (err: unknown): string => {
   if (axios.isAxiosError(err)) {
@@ -32,7 +32,7 @@ export function generateJourneySteps(isAuthenticated: boolean) {
     },
     {
       route: "/career",
-      target: '[data-tour="career-card"]',
+      target: '[data-tour="career-section"]',
       content: "Explore different career options here.",
       disableBeacon: true,
     },

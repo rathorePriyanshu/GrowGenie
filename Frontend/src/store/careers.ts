@@ -19,9 +19,14 @@ export const useCareerStore = create<CareerState>((set, get) => ({
   setStream: (stream) => set({ selectedStream: stream || null }),
 
   loadCareer: async () => {
+    const { careers, selectedStream } = get();
+
+    // 🚨 DO NOT reload if already present
+    if (careers.length > 0) return;
+
     set({ loading: true });
+
     try {
-      const { selectedStream } = get(); // 👈 grab current stream from store
       const data = await getCareers(selectedStream || null);
       set({ careers: data });
     } catch (err) {

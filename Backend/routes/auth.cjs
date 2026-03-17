@@ -2,7 +2,7 @@ const express = require('express');
 const { User, validateUser, validateUserDetails, validateUserPassword, validateUserResetToken } = require('../models/user.cjs');
 const auth = require('../middleware/auth.cjs');
 const { Token } = require('../models/token.cjs');
-const { transport, default: sendEmail } = require('../utils/email.cjs');
+const { sendEmail } = require('../utils/email.cjs');
 const resetPasswordTemplate = require("../utils/templates/resetlink.cjs");
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
@@ -211,7 +211,7 @@ router.post('/auth/forgot-password', linkLimiter, async (req, res) => {
             expiresAt: new Date(Date.now() + 15 * 60 * 1000),
         });
 
-        const resetlink = `http://localhost:5173/auth/reset?token=${resetToken}`;
+        const resetlink = `${process.env.CLIENT_URL}/auth/reset?token=${resetToken}`;
 
         await sendEmail(user.email, resetPasswordTemplate(resetlink));
 

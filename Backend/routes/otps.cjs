@@ -1,6 +1,6 @@
 const express = require('express');
 const { OTP, validateSendOTP, validateVerifyOTP } = require('../models/otp.cjs');
-const sendEmail = require("../utils/email.cjs");
+const { sendEmail } = require("../utils/email.cjs");
 const otpTemplate = require("../utils/templates/otp.cjs");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');

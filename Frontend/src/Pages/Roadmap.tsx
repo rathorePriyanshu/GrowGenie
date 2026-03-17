@@ -34,8 +34,6 @@ const Roadmap = () => {
     }
   }, [id]);
 
-  if (loading) return <AILoading messages={roadmapMessages} />;
-
   const handleClick = async () => {
     try {
       const res = await saveRoadmap(id!);
@@ -53,6 +51,12 @@ const Roadmap = () => {
 
   return (
     <div className="relative min-h-screen flex flex-col w-full overflow-x-hidden bg-[#0d1117] group/design-root">
+      {loading && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60">
+          <AILoading messages={roadmapMessages} />
+        </div>
+      )}
+
       <div className="flex flex-col h-full grow">
         <div className="flex gap-2 justify-start px-5 py-4">
           <button
