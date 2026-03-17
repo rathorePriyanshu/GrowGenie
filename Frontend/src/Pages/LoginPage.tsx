@@ -1,16 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import type { LoginData } from "../servies/types";
 import { getErrorMessage } from "../servies/methods";
 import { forgetPassword, Login } from "../servies/api";
 import { useAuthStore } from "../store/auth";
 import Loading from "../Components/Loading";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { loading, setLoading } = useAuthStore();
   const email = sessionStorage.getItem("email") ?? undefined;
 
@@ -28,14 +26,6 @@ const LoginPage = () => {
     },
     mode: "onChange",
   });
-
-  useEffect(() => {
-    if (location.state?.from) {
-      toast.error("Login to access this page", {
-        toastId: "auth-required",
-      });
-    }
-  }, []);
 
   const onsubmit = async (data: LoginData) => {
     try {

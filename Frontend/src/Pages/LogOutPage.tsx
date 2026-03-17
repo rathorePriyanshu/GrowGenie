@@ -7,15 +7,14 @@ const LogOutPage = () => {
   const clearAuth = useAuthStore((s) => s.clearAuth);
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    navigate("/auth", { replace: true });
 
+    localStorage.removeItem("accessToken");
     clearAuth();
 
     toast.success("Logged out successfully", {
       toastId: "logout",
     });
-
-    navigate("/auth/login", { replace: true });
   };
 
   return (

@@ -34,10 +34,12 @@ const CarreerCard = ({ career }: CarreerCardProps) => {
         data-tour="career-card"
         className="flex min-w-32 flex-col overflow-hidden rounded-lg shadow-lg shadow-black/20 transition-shadow duration-300 bg-gray-900 border border-[#29382f]"
       >
-        <div
-          className="w-full h-48 bg-center bg-cover bg-no-repeat"
-          style={{ backgroundImage: `url(${career.img})` }}
-        ></div>
+        <img
+          src={`${career.img}`}
+          alt={career.title}
+          loading="lazy"
+          className="w-full h-48 object-cover"
+        />
         <div className="p-6 flex flex-col flex-grow">
           <h3 className="text-lg font-bold leading-tight mb-2 text-white">
             {career.title}

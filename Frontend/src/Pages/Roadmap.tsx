@@ -7,13 +7,20 @@ import { useRoadmapStore } from "../store/roadmap";
 import { useNavigate, useParams } from "react-router-dom";
 import { saveRoadmap } from "../servies/api";
 import { useEffect } from "react";
-import Loading from "../Components/Loading";
 import { toast } from "react-toastify";
+import AILoading from "../Components/AILoading";
 
 const Roadmap = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { roadmap, LoadProfileRoadmap, loading } = useRoadmapStore();
+
+  const roadmapMessages = [
+    "Designing your learning path...",
+    "Selecting essential skills...",
+    "Structuring your roadmap...",
+    "Finalizing your roadmap...",
+  ];
 
   useEffect(() => {
     try {
@@ -27,7 +34,7 @@ const Roadmap = () => {
     }
   }, [id]);
 
-  if (loading) return <Loading />;
+  if (loading) return <AILoading messages={roadmapMessages} />;
 
   const handleClick = async () => {
     try {
