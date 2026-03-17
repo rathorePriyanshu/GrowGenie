@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { CareerData } from "../servies/types";
 import { useRoadmapStore } from "../store/roadmap";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../store/auth";
 
 interface CarreerCardProps {
   career: CareerData;
@@ -11,9 +12,15 @@ interface CarreerCardProps {
 const CarreerCard = ({ career }: CarreerCardProps) => {
   const navigate = useNavigate();
   const { LoadRoadmap } = useRoadmapStore();
+  const { isAuthenticated } = useAuthStore();
 
   const handleClick = async () => {
     try {
+      if (!isAuthenticated) {
+        navigate("/auth/login");
+        return;
+      }
+
       const roadmap = await LoadRoadmap(
         career.career_id,
         career.title,

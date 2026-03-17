@@ -4,10 +4,18 @@ import { useQuizStore } from "../store/quiz";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AILoading from "./AILoading";
+import Loading from "./Loading";
 
 const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
-  const { quizess, loading, answers, loadQuizes, selectAnswer, submit } =
-    useQuizStore();
+  const {
+    quizess,
+    loading,
+    isSubmittingQuiz,
+    answers,
+    loadQuizes,
+    selectAnswer,
+    submit,
+  } = useQuizStore();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -22,7 +30,14 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
     loadQuizes(classLevel);
   }, [classLevel]);
 
-  if (loading) return <AILoading messages={careerMessages} />;
+  if (loading)
+    return (
+      <div className="flex flex-1">
+        <Loading />
+      </div>
+    );
+
+  if (isSubmittingQuiz) return <AILoading messages={careerMessages} />;
 
   if (!quizess.length) {
     return (

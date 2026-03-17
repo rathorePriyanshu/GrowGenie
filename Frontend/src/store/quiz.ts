@@ -7,6 +7,7 @@ interface QuizState {
   answers: QuizAnswer[];
   result: QuizResult | null;
   loading: boolean;
+  isSubmittingQuiz: boolean;
 
   loadQuizes: (classLevel: "10" | "12") => Promise<void>;
   selectAnswer: (questionId: string, selectedOptionId: string) => void;
@@ -18,6 +19,7 @@ export const useQuizStore = create<QuizState>((set, get) => ({
   answers: [],
   result: null,
   loading: false,
+  isSubmittingQuiz: false,
 
   loadQuizes: async (classLevel) => {
     set({ loading: true });
@@ -44,14 +46,14 @@ export const useQuizStore = create<QuizState>((set, get) => ({
     const { answers } = get();
     if (!answers.length) return;
 
-    set({ loading: true });
+    set({ isSubmittingQuiz: true });
     try {
       const res = await submitAnswers(answers);
       set({ result: res });
     } catch (err) {
       console.error(err);
     } finally {
-      set({ loading: false });
+      set({ isSubmittingQuiz: false });
     }
   },
 }));
