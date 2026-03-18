@@ -37,7 +37,10 @@ const CarreerCard = ({ career }: CarreerCardProps) => {
 
   return (
     <>
-      <div className="flex min-w-32 flex-col overflow-hidden rounded-lg shadow-lg shadow-black/20 transition-shadow duration-300 bg-gray-900 border border-[#29382f]">
+      <div
+        data-tour="career-section"
+        className="flex min-w-32 flex-col overflow-hidden rounded-lg shadow-lg shadow-black/20 transition-shadow duration-300 bg-gray-900 border border-[#29382f]"
+      >
         <img
           src={`${career.img}`}
           alt={career.title}

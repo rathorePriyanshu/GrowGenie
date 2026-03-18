@@ -4,37 +4,31 @@ import { useCareerStore } from "../store/careers";
 import Loading from "../Components/Loading";
 import { useRoadmapStore } from "../store/roadmap";
 import AILoading from "../Components/AILoading";
+import { useTour } from "../Components/TourContext";
+import { roadmapMessages, staticCareer } from "../servies/data";
 
 const CarreerPage = () => {
   const { careers, loadCareer, loading, selectedStream } = useCareerStore();
+
+  const { isTourActive } = useTour();
   const RoadMaploading = useRoadmapStore((s) => s.loading);
-  const roadmapMessages = [
-    "Designing your learning path...",
-    "Selecting essential skills...",
-    "Structuring your roadmap...",
-    "Finalizing your roadmap...",
-  ];
+
+  const dataToRender = isTourActive ? staticCareer : careers;
 
   useEffect(() => {
-    if (careers.length === 0) {
-      loadCareer();
-    }
-  }, [selectedStream]);
+    if (isTourActive) return;
 
-  if (loading)
-    return (
-      <div className="flex-1">
-        <Loading />
-      </div>
-    );
+    loadCareer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedStream, isTourActive]);
 
   if (RoadMaploading) return <AILoading messages={roadmapMessages} />;
 
   return (
     <div className="relative flex-1">
-      {(loading || RoadMaploading) && (
+      {loading && !isTourActive && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          {loading ? <Loading /> : <AILoading messages={roadmapMessages} />}
+          <Loading />
         </div>
       )}
       <main className="px-5 flex flex-1 justify-center py-10">
@@ -48,13 +42,10 @@ const CarreerPage = () => {
               students. Find your passion and plan your future.
             </p>
           </div>
-          <div
-            data-tour="career-section"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {careers.length > 0 ? (
-              careers.map((career) => (
-                <CarreerCard key={career.title} career={career} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {dataToRender.length > 0 ? (
+              dataToRender.map((career) => (
+                <CarreerCard key={career.career_id} career={career} />
               ))
             ) : (
               <p className="text-center text-gray-400 col-span-full mt-4">

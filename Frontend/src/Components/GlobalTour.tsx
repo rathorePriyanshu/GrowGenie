@@ -15,10 +15,12 @@ const GlobalTour = ({ isAuthenticated, children }: Props) => {
 
   const [run, setRun] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+  const [isTourActive, setActiveTour] = useState(false);
 
   const steps = generateJourneySteps(isAuthenticated);
 
   const startTour = () => {
+    setActiveTour(true);
     navigate("/stream");
 
     const firstStep = steps[0];
@@ -42,13 +44,10 @@ const GlobalTour = ({ isAuthenticated, children }: Props) => {
   const handleCallback = (data: CallBackProps) => {
     const { status, index, type, action } = data;
 
-    if (
-      status === STATUS.FINISHED ||
-      status === STATUS.SKIPPED ||
-      action === "close"
-    ) {
+    if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
       setRun(false);
       setStepIndex(0);
+      setActiveTour(false);
     }
 
     if (type !== "step:after" || action !== "next") return;
@@ -57,6 +56,7 @@ const GlobalTour = ({ isAuthenticated, children }: Props) => {
     if (nextIndex >= steps.length) {
       setRun(false);
       setStepIndex(0);
+      setActiveTour(false);
       navigate("/");
       return;
     }
@@ -74,7 +74,7 @@ const GlobalTour = ({ isAuthenticated, children }: Props) => {
   };
 
   return (
-    <TourContext.Provider value={{ startTour }}>
+    <TourContext.Provider value={{ startTour, isTourActive }}>
       {children}
 
       <Joyride
@@ -83,10 +83,10 @@ const GlobalTour = ({ isAuthenticated, children }: Props) => {
         stepIndex={stepIndex}
         callback={handleCallback}
         continuous
-        showSkipButton
         showProgress
         scrollToFirstStep
         disableOverlayClose
+        hideCloseButton
         hideBackButton
         styles={{
           options: {

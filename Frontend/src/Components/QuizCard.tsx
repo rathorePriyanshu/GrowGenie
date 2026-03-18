@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AILoading from "./AILoading";
 import Loading from "./Loading";
+import { careerMessages } from "../servies/data";
 
 const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   const {
@@ -18,13 +19,6 @@ const QuizCard = ({ classLevel }: { classLevel: "10" | "12" }) => {
   } = useQuizStore();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const careerMessages = [
-    "Analyzing your preferences...",
-    "Understanding your strengths...",
-    "Matching careers with your profile...",
-    "Preparing your recommendation...",
-  ];
 
   useEffect(() => {
     loadQuizes(classLevel);

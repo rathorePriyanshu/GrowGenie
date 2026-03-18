@@ -8,19 +8,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { saveRoadmap } from "../servies/api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import AILoading from "../Components/AILoading";
+import Loading from "../Components/Loading";
 
 const Roadmap = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { roadmap, LoadProfileRoadmap, loading } = useRoadmapStore();
-
-  const roadmapMessages = [
-    "Designing your learning path...",
-    "Selecting essential skills...",
-    "Structuring your roadmap...",
-    "Finalizing your roadmap...",
-  ];
+  const { roadmap, loading, LoadProfileRoadmap } = useRoadmapStore();
 
   useEffect(() => {
     try {
@@ -53,7 +46,7 @@ const Roadmap = () => {
     <div className="relative min-h-screen flex flex-col w-full overflow-x-hidden bg-[#0d1117] group/design-root">
       {loading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60">
-          <AILoading messages={roadmapMessages} />
+          <Loading />
         </div>
       )}
 
