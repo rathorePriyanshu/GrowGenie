@@ -163,7 +163,7 @@ const ProfilePage = () => {
               </p>
             )}
           </section>
-          <section ref={sectionRef} className="space-y-4">
+          {/* <section ref={sectionRef} className="space-y-4">
             <h2 className="text-[22px] text-white font-bold tracking-[-0.015rem] leading-tight px-2">
               Settings
             </h2>
@@ -184,7 +184,7 @@ const ProfilePage = () => {
                 className="block w-full text-left p-2 text-white hover:bg-white/5 transition-colors"
                 href="#"
               >
-                setPassword
+                Set Password
               </a>
               <a
                 className="block w-full text-left p-2 text-red-400 hover:bg-red-500/10 rounded-b-lg transition-colors"
@@ -193,7 +193,7 @@ const ProfilePage = () => {
                 Delete Account
               </a>
             </div>
-          </section>
+          </section> */}
           <div className="text-center">
             <button
               onClick={() => navigate("/career")}
